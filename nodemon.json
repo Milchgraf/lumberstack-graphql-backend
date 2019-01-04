@@ -1,0 +1,7 @@
+{
+  "env" : {
+    "MONGO_USER": "jasper",
+    "MONGO_PASSWORD": "ZszFEubG2dXvK30S",
+    "MONGO_DB": "ls-graphql"
+  }
+}
