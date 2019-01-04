@@ -2,14 +2,11 @@ const Customer = require('../../models/customer.model');
 const { transformCustomer } = require('./merge');
 
 module.exports = {
-  customers: async (args, req) => {
+  customers: async () => {
     try {
       const customers = await Customer.find();
       return customers.map(customer => {
-        return {
-          ...customer._doc,
-          _id: customer.id
-        };
+        return transformCustomer(customer);
       });
     } catch (error) {
       throw error;
@@ -18,6 +15,7 @@ module.exports = {
 
   createCustomer: async (args, req) => {
     const customer = new Customer({
+      customerNr: args.customerInput.customerNr,
       salutation: args.customerInput.salutation,
       firstName: args.customerInput.firstName,
       lastName: args.customerInput.lastName,
@@ -30,10 +28,9 @@ module.exports = {
       mobileNr: args.customerInput.mobileNr,
       phoneNr: args.customerInput.phoneNr,
       email: args.customerInput.email,
-      comment: args.customerInput.comment
+      comment: args.customerInput.comment,
+      creator: '5c2f50173397c02fcc835024'
     });
-
-    console.log(customer);
 
     let createdCustomer;
     try {
@@ -44,4 +41,4 @@ module.exports = {
       throw error;
     }
   }
-}
+};

@@ -11,6 +11,7 @@ module.exports = buildSchema(`
 
   type Customer {
     _id: ID!
+    customerNr: String!
     salutation: String!
     firstName: String!
     lastName: String!
@@ -24,6 +25,36 @@ module.exports = buildSchema(`
     phoneNr: String
     email: String
     comment: String
+    creator: User!
+  }
+
+  type Product {
+    _id: ID!
+    productName: String!
+    productDescr: String!
+    productPrice: Float!
+    creator: User!
+  }
+
+  type Item {
+    _id: ID!
+    desiredSchedule: String!
+    customer: Customer!
+    product: Product!
+    comment: String!
+  }
+
+  type Order {
+    _id: ID!
+    orderNr: String!
+    items: [Item!]!
+    comment: String!
+  }
+
+  type AuthData {
+    userId: ID!
+    token: String!
+    tokenExpiration: Int!
   }
 
   input UserInput {
@@ -34,6 +65,7 @@ module.exports = buildSchema(`
   }
 
   input CustomerInput {
+    customerNr: String!
     salutation: String!
     firstName: String!
     lastName: String!
@@ -49,13 +81,22 @@ module.exports = buildSchema(`
     comment: String
   }
 
+  input ProductInput {
+    productName: String!
+    productDescr: String!
+    productPrice: Float!
+  }
+
   type RootQuery {
     customers: [Customer!]!
+    products: [Product!]!
+    login(email: String!, password: String!): AuthData!
   }
 
   type RootMutation {
     createUser(userInput: UserInput): User
     createCustomer(customerInput: CustomerInput): Customer
+    createProduct(productInput: ProductInput): Product
   }
 
   schema {

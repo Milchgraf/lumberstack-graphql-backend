@@ -1,6 +1,10 @@
 const { Schema, model } = require('mongoose');
 
 const customerSchema = new Schema({
+  customerNr: {
+    type: String,
+    required: true
+  },
   salutation: {
     type: String,
     required: true
@@ -47,6 +51,10 @@ const customerSchema = new Schema({
   },
   comment: {
     type: String
+  },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 
